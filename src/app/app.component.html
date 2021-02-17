@@ -1,0 +1,54 @@
+<div class="navigation">
+  <nav class="navbar navbar-default">
+    <div class="container">
+
+      <div class="navbar-header">
+        <a href="#" class="navbar-brand">{{ title }}</a>
+      </div>
+
+      <ul class="nav navbar-nav">
+        <li><a *ngIf="user" [routerLink]="['/timeline']" [routerLinkActive]="['active']"><i class="mdi mdi-format-list-text"></i> Timeline</a></li>
+        <li><a *ngIf="user" [routerLink]="['/explorar']" [routerLinkActive]="['active']"><i class="mdi mdi-compass-outline"></i> Explorar</a></li>
+        <li><a *ngIf="user" [routerLink]="['/mensajes']" [routerLinkActive]="['active']"><i class="mdi mdi-message-text-outline"></i> Mensajes</a></li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right" *ngIf="user">
+        <li class="dropdown">
+          <a class="dropdown-toggle pointer wrapper-avatar" data-toggle="dropdown">
+            <div *ngIf="!user.image" class="avatar img-responsive" [style.background-image]="'url(/assets/img/default.png)'"></div>
+            <div *ngIf="user.image" class="avatar img-responsive" [style.background-image]="'url(' + url + 'user/get-image/' + user._id + '?v='+ user.image + ')'"></div>
+            <span class="caret"></span>
+          </a>
+          <div class="dropdown-menu">
+            <a [routerLink]="['/perfil', user._id]" [routerLinkActive]="['active']" class="dropdown-item">
+              <i class="mdi mdi-account"></i>
+              Mi perfil
+            </a>
+            <a [routerLink]="['/mis-datos']" [routerLinkActive]="['active']" class="dropdown-item">
+              <i class="mdi mdi-cog"></i>
+              Mis datos
+            </a>
+            <a class="dropdown-item pointer" (click)="logout()">
+              <i class="mdi mdi-logout"></i>
+              Salir
+            </a>
+          </div>
+        </li>
+      </ul>
+
+      <ul class="nav navbar-nav navbar-right" *ngIf="!user">
+        <li><a [routerLink]="['/acceso']" [routerLinkActive]="['active']">
+          <i class="mdi mdi-login"></i> Entrar
+        </a></li>
+        <li><a [routerLink]="['/registro']" [routerLinkActive]="['active']">
+          <i class="mdi mdi-account"></i> Crear cuenta
+        </a></li>
+      </ul>
+
+    </div>
+  </nav>
+</div>
+
+<router-outlet></router-outlet>
+
+<br><br><br><br>

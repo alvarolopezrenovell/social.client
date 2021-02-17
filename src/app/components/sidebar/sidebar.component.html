@@ -1,0 +1,70 @@
+<div *ngIf="identity && user && stats" class="panel panel-user">
+  <div class="user-info text-center">
+    <a [routerLink]="['/perfil', user._id]" *ngIf="!user.image" class="avatar img-responsive" [style.background-image]="'url(/assets/img/default.png)'"></a>
+    <a [routerLink]="['/perfil', user._id]" *ngIf="user.image" class="avatar img-responsive" [style.background-image]="'url(' + url + 'user/get-image/' + user._id + '?v='+ user.image + ')'"></a>
+
+    <a [routerLink]="['/perfil', user._id]" class="user-nick">@{{ user.nick }}</a>
+    <div class="user-name">{{ user.name + ' ' + user.surname }}</div>
+
+    <div *ngIf="followed" class="label label-lg label-light-primary">Te sigue</div>
+    <div *ngIf="followed" style="margin-bottom: 15px;"></div>
+
+    <div class="row">
+      <div class="col-xs-12">
+        <button *ngIf="!following && identity._id !== user._id" (click)="follow(user._id)" class="btn btn-primary btn-sm">Seguir</button>
+        <button *ngIf="following && identity._id !== user._id" (click)="unfollow(user._id)" class="btn btn-light btn-sm">Siguiendo</button>
+        <button [routerLink]="['/mis-datos']" *ngIf="identity._id === user._id" class="btn btn-default btn-sm">Editar datos</button>
+      </div>
+    </div>
+
+    <div class="user-stats">
+      <div class="row">
+        <div class="col-xs-12 col-sm-4">
+          <a [routerLink]="['/perfil', user._id, 'publicaciones']" class="no_link">
+            <div class="count-stats">{{ stats.publications }}</div>
+            <div class="title-stats">Post</div>
+          </a>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <a [routerLink]="['/perfil', user._id, 'seguidores']" class="no_link">
+            <div class="count-stats">{{ stats.followed }}</div>
+            <div class="title-stats">Seguidores</div>
+          </a>
+        </div>
+        <div class="col-xs-12 col-sm-4">
+          <a [routerLink]="['/perfil', user._id, 'seguidos']" class="no_link">
+            <div class="count-stats">{{ stats.following }}</div>
+            <div class="title-stats">Seguidos</div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="user && identity._id === user._id" class="panel panel-user">
+  <div class="user-info">
+    <form #newPublicationForm="ngForm" (ngSubmit)="onSubmit(newPublicationForm, $event);">
+
+      <div class="form-group">
+        <label for="text">Escribe tu nueva publicación<span class="text-danger">*</span></label>
+        <textarea class="form-control" id="text" name="text" #text="ngModel" [(ngModel)]="publication.text" rows="5" required="required"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Imagen</label>
+        <div></div>
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="file" name="file" (change)="fileChangeEvent($event)">
+          <label for="file" class="custom-file-label">Sube una imagen</label>
+        </div>
+      </div>
+
+      <div class="alert alert-custom alert-light-success" *ngIf="status === true">Se ha creado la publicación</div>
+      <div class="alert alert-custom alert-light-danger" *ngIf="status === false">Error al crear la publicación</div>
+
+      <input type="submit" value="Enviar" class="btn btn-success" [disabled]="!newPublicationForm.form.valid">
+
+    </form>
+  </div>
+</div>

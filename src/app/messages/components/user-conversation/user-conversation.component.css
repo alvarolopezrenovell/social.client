@@ -1,0 +1,79 @@
+.conversation_item {
+  display: inline-block;
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  padding: 15px 20px;
+  border-left: 3px solid transparent;
+}
+
+.conversation_item:not(.active):hover {
+  background: #f9fbfc;
+}
+
+.active {
+  background: #f3f6f9;
+  border-left: 3px solid #3f51b5;
+}
+
+.conversation_item,
+.conversation_item:hover,
+.conversation_item:active,
+.conversation_item:focus {
+  outline: none;
+}
+
+.conversation_item .avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 100px;
+  margin: auto;
+  background: #fff;
+  background-position: center;
+  background-size: cover;
+  float: left;
+  margin-right: 15px;
+}
+
+.conversation_content {
+  position: relative;
+}
+
+.conversation_item .user-name {
+  font-size: 15px;
+}
+
+.conversation_item .user-nick {
+  font-size: 13px;
+  color: #2196f3;
+}
+
+.conversation_text {
+  display: inline-block;
+  width: calc(100% - 90px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: -4px;
+  font-size: 13px;
+  color: #555;
+}
+
+.conversation_date {
+  color: #b5b5c3;
+  font-size: 12px;
+}
+
+.num_messages_unviewed {
+  position: absolute;
+  right: 0px;
+  top: 0px;
+  background: #1bc5bd;
+  color: #fff;
+  width: 18px;
+  height: 18px;
+  text-align: center;
+  border-radius: 10px;
+  font-size: 11px;
+  padding: 2px;
+}

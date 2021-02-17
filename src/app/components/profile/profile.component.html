@@ -1,0 +1,12 @@
+<div class="container" *ngIf="user_id">
+  <div class="row">
+    <div class="col-xs-12 col-sm-4">
+      <sidebar [user_id]="user_id"></sidebar>
+    </div>
+    <div class="col-xs-12 col-sm-8">
+      <publications *ngIf="section === 'publications'" [user_id]="user_id"></publications>
+      <users *ngIf="section === 'followed'" [user_id]="user_id" [list_type]="section"></users>
+      <users *ngIf="section === 'following'" [user_id]="user_id" [list_type]="section"></users>
+    </div>
+  </div>
+</div>

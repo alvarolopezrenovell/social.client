@@ -1,0 +1,33 @@
+<div class="container">
+  <h1>{{ title }}</h1>
+  <br>
+  <div class="row">
+    <div class="col-xs-12 col-sm-4">
+
+    </div>
+    <div class="col-xs-12 col-sm-8">
+      <form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
+
+        <div class="form-group">
+          <label for="receiver">Para <span class="text-danger">*</span></label>
+          <select class="form-control" name="receiver" id="receiver" [(ngModel)]="message.receiver" required="required">
+            <option *ngFor="let follow of follows" value="{{ follow.user._id }}">
+              {{ follow.user.nick | lowercase }} ({{ follow.user.name }} {{ follow.user.surname }})
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="text">Mensaje <span class="text-danger">*</span></label>
+          <textarea class="form-control" id="text" name="text" #text="ngModel" [(ngModel)]="message.text" rows="5" required="required"></textarea>
+        </div>
+
+        <div class="alert alert-custom alert-light-success" *ngIf="status === true">Se ha enviado el mensaje</div>
+        <div class="alert alert-custom alert-light-danger" *ngIf="status === false">Error al enviar el mensaje</div>
+
+        <input type="submit" value="Enviar" class="btn btn-success" [disabled]="!formAdd.form.valid">
+
+      </form>
+    </div>
+  </div>
+</div>

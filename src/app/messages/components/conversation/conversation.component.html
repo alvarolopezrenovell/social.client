@@ -1,0 +1,56 @@
+<div *ngIf="user" class="card card-custom card-stretch gutter-b">
+  <div class="card-header align-items-center">
+
+
+    <div class="card-title align-items-start flex-column">
+      <a [routerLink]="['/perfil', user._id]" *ngIf="!user.image" class="avatar img-responsive" [style.background-image]="'url(/assets/img/default.png)'"></a>
+      <a [routerLink]="['/perfil', user._id]" *ngIf="user.image" class="avatar img-responsive" [style.background-image]="'url(' + url + 'user/get-image/' + user._id + '?v='+ user.image + ')'"></a>
+
+      <h3 class="" style="font-size: 16px; font-weight: bold; margin: 0px;">
+        <a [routerLink]="['/perfil', user._id]" class="user-nick no_link">@{{ user.nick }}</a>
+      </h3>
+    </div>
+
+
+    <div class="card-toolbar"></div>
+  </div>
+  <div id="conversation_wrapper" class="card-body conversation_wrapper" #scrollMe [scrollTop]="firstLoad ? scrollMe.scrollHeight : scrollMe.scrollTop" (scroll)="onScroll($event)">
+
+      <div *ngFor="let message of messages; let i = index;">
+
+        <div class="conversation_date_split" *ngIf="i == 0 || (messages[i-1] && (messages[i-1].created_at | amFromUnix | date:'dd-MM-yyy') !== (message.created_at | amFromUnix | date:'dd-MM-yyy'))">
+          <span>{{ message.created_at | amFromUnix | amLocale:'es' | date }}</span>
+        </div>
+
+        <div class="message_item" [class.message_left]="message.emitter._id !== identity._id" [class.message_right]="message.emitter._id === identity._id">
+          <div id="message_item_{{i}}" class="message_text">
+            {{ message.text }}
+          </div>
+          <div class="message_date">
+            {{ (message.created_at | amFromUnix) | date:'H:mm' }}
+          </div>
+
+          <div *ngIf="(messages[i+1] && messages[i+1].emitter._id !== message.emitter._id && message.emitter._id === user._id) || (!messages[i+1] && message.emitter._id === user._id)">
+            <div *ngIf="!user.image" class="avatar img-responsive" [style.background-image]="'url(/assets/img/default.png)'"></div>
+            <div *ngIf="user.image" class="avatar img-responsive" [style.background-image]="'url(' + url + 'user/get-image/' + user._id + '?v='+ user.image + ')'"></div>
+          </div>
+        </div>
+
+      </div>
+
+  </div>
+  <div class="card-footer align-items-center">
+    <form #formAdd="ngForm" (ngSubmit)="onSubmit(formAdd)">
+      <textarea class="form-control border-0 p-0" rows="2" id="text" name="text" #text="ngModel" [(ngModel)]="message.text" (keyup)="autoGrow($event)"  placeholder="Envía un mensaje..." required="required"></textarea>
+
+      <div class="alert alert-custom alert-light-danger" *ngIf="status === false">Error al enviar el mensaje</div>
+
+      <div class="d-flex align-items-center justify-content-between mt-5">
+        <div>
+          <button type="submit" class="btn btn-primary btn-md text-uppercase font-weight-bold chat-send py-2 px-6" [disabled]="!formAdd.form.valid">Enviar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+
+</div>

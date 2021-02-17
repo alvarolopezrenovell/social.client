@@ -1,0 +1,66 @@
+<div *ngIf="publications && publications.length === 0 && timeline === false" class="alert alert-custom alert-light-warning">El usuario no tiene publicaciones</div>
+
+<div class="row">
+  <div *ngFor="let publication of publications" class="col-xs-12">
+    <div class="card card-custom">
+      <div class="card-header">
+        <div class="card-title">
+
+          <a [routerLink]="['/perfil', publication.user._id]" *ngIf="!publication.user.image" class="avatar img-responsive" [style.background-image]="'url(/assets/img/default.png)'"></a>
+          <a [routerLink]="['/perfil', publication.user._id]" *ngIf="publication.user.image" class="avatar img-responsive" [style.background-image]="'url(' + url + 'user/get-image/' + publication.user._id + '?v='+ publication.user.image + ')'"></a>
+
+          <h3 class="card-label">
+            <a [routerLink]="['/perfil', publication.user._id]" class="user-nick no_link">{{ publication.user.nick }}</a>
+          </h3>
+        </div>
+        <div class="card-toolbar">
+          <span class="publication_date">{{ (publication.created_at | amFromUnix) | amLocale:'es' | amTimeAgo }}</span>
+
+
+          <div class="dropdown">
+            <i class="publication_settings dropdown-toggle mdi mdi-dots-horizontal" type="button" id="publication_dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></i>
+            <div class="dropdown-menu" aria-labelledby="publication_dropdown">
+              <a class="dropdown-item" href="#"><i class="mdi mdi-share"></i> Compartir</a>
+              <a *ngIf="identity._id === publication.user._id" class="dropdown-item font_red pointer" data-toggle="modal" [attr.data-target]="'#myModal'+publication._id"><i class="mdi mdi-delete"></i> Eliminar</a>
+            </div>
+          </div>
+
+          <!-- Modal -->
+          <div class="modal fade" id="myModal{{publication._id}}" tabindex="-1" role="dialog" aria-hidden="true" style="overflow-y: hidden;">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">¿Estás seguro?</h5>
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Al borrar la publicación no podrás recuperarla
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-light" data-dismiss="modal">Cerrar</button>
+                  <button (click)="deletePublication(publication._id)" type="button" class="btn btn-light-danger" data-dismiss="modal">Borrar publicación</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <img *ngIf="publication.file" class="publication_image" src="{{ url + 'publication/get-file/' + publication._id + '?v='+ publication.file }}" alt="">
+      <div class="card-body">
+        <div class="publication_text">
+          {{ publication.text }}
+        </div>
+      </div>
+    </div>
+    <br>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-xs-12 text-center">
+    <button class="btn btn-primary" (click)="viewMore()" *ngIf="!noMore">Ver más publicaciones</button>
+  </div>
+</div>

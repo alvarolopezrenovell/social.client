@@ -1,0 +1,17 @@
+<div *ngIf="user" [routerLink]="[user._id]" [routerLinkActive]="['active']" class="conversation_item">
+
+  <div *ngIf="!user.image" class="avatar img-responsive" [style.background-image]="'url(/assets/img/default.png)'"></div>
+  <div *ngIf="user.image" class="avatar img-responsive" [style.background-image]="'url(' + url + 'user/get-image/' + user._id + '?v='+ user.image + ')'"></div>
+
+  <a class="user-nick no_link"><b>@{{ user.nick }}</b></a>
+  <div class="conversation_content">
+    <div class="conversation_text">
+      <span *ngIf="last_message">{{ last_message.text }}</span>
+    </div>
+    <div class="conversation_date">
+      <span *ngIf="last_message">{{ (last_message.created_at | amFromUnix) | amLocale:'es' | amTimeAgo }}</span>
+    </div>
+    <span *ngIf="num_messages_unviewed > 0" class="num_messages_unviewed">{{ num_messages_unviewed }}</span>
+  </div>
+
+</div>

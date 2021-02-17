@@ -1,0 +1,51 @@
+ .panel-user {
+  -webkit-box-shadow: 0 0 30px 0 rgb(82 63 105 / 5%);
+  box-shadow: 0 0 30px 0 rgb(82 63 105 / 5%);
+  border-radius: .42rem;
+  background: #fff;
+  color: #555;
+  padding: 20px;
+}
+
+.panel-user .user-info {
+  display: inline-block;
+  width: 100%;
+}
+
+.panel-user .avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 100px;
+  margin: auto;
+  background: #fff;
+  background-position: center;
+  background-size: cover;
+}
+
+.panel-user .user-name {
+  font-size: 15px;
+}
+
+.panel-user .user-nick {
+  font-size: 13px;
+  color: #2196f3;
+}
+
+.panel-user .user-stats {
+  font-size: 14px;
+}
+
+.panel-user .user-stats .count-stats {
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.panel-user .user-stats .title-stats {
+  font-size: 12px;
+  margin-top: 2px;
+  color: #b5b5c3!important;
+}
+
+.pagination {
+  margin-top: 0px;
+}

@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12">
+
+      <h1>{{ title }}</h1>
+      <hr>
+
+      <div class="alert alert-success" *ngIf="status">{{ message }}</div>
+      <div class="alert alert-danger" *ngIf="status == false">{{ message }}</div>
+
+      <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+        <div class="form-group">
+          <label for="name">Nombre</label>
+          <input id="name" name="name" #name="ngModel" [(ngModel)]="user.name" type="text" required="required" class="form-control">
+          <span class="form_field_error" *ngIf="!name.valid && name.touched">El nombre es obligatorio</span>
+        </div>
+        <div class="form-group">
+          <label for="surname">Apellidos</label>
+          <input id="surname" name="surname" #surname="ngModel" [(ngModel)]="user.surname" type="text" required="required" class="form-control">
+          <span class="form_field_error" *ngIf="!surname.valid && surname.touched">Los apellidos son obligatorios</span>
+        </div>
+        <div class="form-group">
+          <label for="nick">Apodo</label>
+          <input id="nick" name="nick" #nick="ngModel" [(ngModel)]="user.nick" type="text" required="required" class="form-control">
+          <span class="form_field_error" *ngIf="!nick.valid && nick.touched">El apodo es obligatorio</span>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input id="email" name="email" #email="ngModel" [(ngModel)]="user.email" type="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required="required" class="form-control">
+          <span class="form_field_error" *ngIf="!email.valid && email.touched">El email no es correcto</span>
+        </div>
+        <div class="form-group">
+          <label for="password">Contraseña</label>
+          <input id="password" name="password" #password="ngModel" [(ngModel)]="user.password" type="password" required="required" class="form-control">
+          <span class="form_field_error" *ngIf="!password.valid && password.touched">La contraseña es obligatoria</span>
+        </div>
+        <button type="submit" class="btn btn-primary" [disabled]="!registerForm.form.valid">{{ title }}</button>
+      </form>
+
+    </div>
+  </div>
+</div>
